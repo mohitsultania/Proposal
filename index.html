@@ -39,6 +39,7 @@
       font-size: 16px;
       background: #fb7185;
       color: white;
+      transition: 0.2s;
     }
 
     button:hover { opacity: 0.9; }
@@ -62,7 +63,7 @@
   <script>
     let step = 0;
     let answer = null;
-    let noClickCount = 0;   // NEW COUNTER
+    let noClickCount = 0;
 
     const card = document.getElementById("card");
 
@@ -125,12 +126,46 @@
       }
 
       if (step === 5) {
+
+        let message = '';
+
+        if (noClickCount >= 100) {
+          message = '<div class="msg">No option disabled 😌❤️</div>';
+        } else if (noClickCount >= 75) {
+          message = '<div class="msg">Button getting tired too 😭</div>';
+        } else if (noClickCount >= 50) {
+          message = '<div class="msg">You’re stubborn huh 😒❤️</div>';
+        } else if (noClickCount >= 40) {
+          message = '<div class="msg">I can do this all day 😌</div>';
+        } else if (noClickCount >= 30) {
+          message = '<div class="msg">Just press YES already 🥺</div>';
+        } else if (noClickCount >= 20) {
+          message = '<div class="msg">Tired selecting No huh? 😏</div>';
+        } else if (noClickCount >= 10) {
+          message = '<div class="msg">Still trying? 😂</div>';
+        }
+
         card.innerHTML = `
-          ${noClickCount >= 20 ? '<div class="msg">Tired selecting No huh? 😏</div>' : ''}
+          ${message}
           <h2>Will You Be Mine Forever? ❤️</h2>
           <button class="yes" onclick="nextStep()">YES ❤️</button>
-          <button class="no" ontouchstart="moveNo()" onmouseover="moveNo()">No 🙈</button>
+          <button id="noBtn" class="no" ontouchstart="moveNo()" onmouseover="moveNo()">No 🙈</button>
         `;
+
+        // Shrink button after 75 tries
+        if (noClickCount >= 75 && noClickCount < 100) {
+          const btn = document.getElementById('noBtn');
+          btn.style.transform = 'scale(0.6)';
+        }
+
+        // Disable after 100
+        if (noClickCount >= 100) {
+          const btn = document.getElementById('noBtn');
+          btn.onclick = null;
+          btn.ontouchstart = null;
+          btn.onmouseover = null;
+          btn.style.opacity = '0.6';
+        }
       }
 
       if (step === 6) {
@@ -159,17 +194,16 @@
     }
 
     function moveNo() {
-      const btn = document.querySelector('.no');
+      const btn = document.getElementById('noBtn');
       if (!btn) return;
 
-      noClickCount++;   // INCREMENT COUNTER
+      noClickCount++;
 
       btn.style.position = 'absolute';
       btn.style.left = Math.random()*70 + '%';
       btn.style.top  = Math.random()*70 + '%';
 
-      // Re-render to show message if threshold hit
-      if (noClickCount >= 20) render();
+      render();
     }
 
     render();
@@ -177,6 +211,7 @@
 
 </body>
 </html>
+
 
 
 

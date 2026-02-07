@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg,#ffe4e6,#fecdd3,#fda4af);
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+    }
+
+    h1,h2 { margin: 0 0 10px; }
+    p { margin: 10px 0 20px; }
+
+    button {
+      padding: 12px 18px;
+      margin: 6px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      background: #fb7185;
+      color: white;
+    }
+
+    button:hover { opacity: 0.9; }
+
+    .yes { background: #22c55e; }
+    .no  { background: #ef4444; position: relative; }
+
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card"></div>
+
+  <script>
+    let step = 0;
+    let answer = null;
+
+    const card = document.getElementById("card");
+
+    function render() {
+
+      if (step === 0) {
+        card.innerHTML = `
+          <h1>Dear Yaji ❤️</h1>
+          <p>Can I have a little time of yours? hehe😝</p>
+          <button onclick="nextStep()">Tap this like my head 😌</button>
+        `;
+      }
+
+      if (step === 1) {
+        card.innerHTML = `
+          <h2>Do you know how much I love you 🥺?</h2>
+          <button onclick="choose('little')">A little 🤏</button>
+          <button onclick="choose('lot')">A lot 💖</button>
+          <button onclick="choose('infinite')">Infinite ♾️</button>
+        `;
+      }
+
+      if (step === 2 && answer === 'little') {
+        card.innerHTML = `
+          <h2>Wrong answer 😤👉👈</h2>
+          <p>Try again cutie 🥺</p>
+          <button onclick="goBack()">Go Back ↩️</button>
+        `;
+      }
+
+      if (step === 2 && answer === 'lot') {
+        card.innerHTML = `
+          <h2>You know me 🥺</h2>
+          <p>But go back again hehe 😝</p>
+          <button onclick="goBack()">Go Back ↩️</button>
+        `;
+      }
+
+      if (step === 2 && answer === 'infinite') {
+        card.innerHTML = `
+          <h2>Now you’ve got it right 😒🥺❤️</h2>
+          <button onclick="nextStep()">Continue →</button>
+        `;
+      }
+
+      if (step === 3) {
+        card.innerHTML = `
+          <h2>From the moment you came into my life…</h2>
+          <p>Everything became brighter, happier, and more meaningful.</p>
+          <button onclick="nextStep()">Continue →</button>
+        `;
+      }
+
+      if (step === 4) {
+        card.innerHTML = `
+          <h2>Will You Be Mine Forever? ❤️</h2>
+          <button class="yes" onclick="nextStep()">YES ❤️</button>
+          <button class="no" ontouchstart="moveNo()" onmouseover="moveNo()">No 🙈</button>
+        `;
+      }
+
+      if (step === 5) {
+        card.innerHTML = `
+          <h2>You Just Made Me The Happiest Person Alive 💍</h2>
+          <p>I Love You Forever ❤️</p>
+        `;
+      }
+    }
+
+    function nextStep() {
+      step++;
+      render();
+    }
+
+    function choose(val) {
+      answer = val;
+      step = 2;
+      render();
+    }
+
+    function goBack() {
+      answer = null;
+      step = 1;
+      render();
+    }
+
+    function moveNo() {
+      const btn = document.querySelector('.no');
+      btn.style.position = 'absolute';
+      btn.style.left = Math.random()*70 + '%';
+      btn.style.top  = Math.random()*70 + '%';
+    }
+
+    render();
+  </script>
+
+</body>
+</html>

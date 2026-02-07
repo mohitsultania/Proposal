@@ -149,7 +149,7 @@
           ${message}
           <h2>Will You Be Mine Forever? ❤️</h2>
           <button class="yes" onclick="nextStep()">YES ❤️</button>
-          <button id="noBtn" class="no" ontouchstart="moveNo()" onmouseover="moveNo()">No 🙈</button>
+          <button id="noBtn" class="no" onmouseover="moveNo()" ontouchstart="moveNo()">No 🙈</button>
         `;
 
         // Shrink button after 75 tries
@@ -197,14 +197,15 @@
       const btn = document.getElementById('noBtn');
       if (!btn) return;
 
+      // Count how many times button ESCAPES (not clicks)
       noClickCount++;
 
-      // Move button
+      // Move button away
       btn.style.position = 'absolute';
       btn.style.left = Math.random()*70 + '%';
       btn.style.top  = Math.random()*70 + '%';
 
-      // Only re-render when message tier changes
+      // Re-render only when escalation tier reached
       if (
         noClickCount === 10 ||
         noClickCount === 20 ||
@@ -223,5 +224,6 @@
 
 </body>
 </html>
+
 
 

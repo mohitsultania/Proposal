@@ -46,6 +46,13 @@
     .yes { background: #22c55e; }
     .no  { background: #ef4444; position: relative; }
 
+    .msg {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #e11d48;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 <body>
@@ -55,6 +62,7 @@
   <script>
     let step = 0;
     let answer = null;
+    let noClickCount = 0;   // NEW COUNTER
 
     const card = document.getElementById("card");
 
@@ -118,6 +126,7 @@
 
       if (step === 5) {
         card.innerHTML = `
+          ${noClickCount >= 20 ? '<div class="msg">Tired selecting No huh? 😏</div>' : ''}
           <h2>Will You Be Mine Forever? ❤️</h2>
           <button class="yes" onclick="nextStep()">YES ❤️</button>
           <button class="no" ontouchstart="moveNo()" onmouseover="moveNo()">No 🙈</button>
@@ -152,9 +161,15 @@
     function moveNo() {
       const btn = document.querySelector('.no');
       if (!btn) return;
+
+      noClickCount++;   // INCREMENT COUNTER
+
       btn.style.position = 'absolute';
       btn.style.left = Math.random()*70 + '%';
       btn.style.top  = Math.random()*70 + '%';
+
+      // Re-render to show message if threshold hit
+      if (noClickCount >= 20) render();
     }
 
     render();
@@ -162,4 +177,6 @@
 
 </body>
 </html>
+
+
 

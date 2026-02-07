@@ -199,11 +199,23 @@
 
       noClickCount++;
 
+      // Move button
       btn.style.position = 'absolute';
       btn.style.left = Math.random()*70 + '%';
       btn.style.top  = Math.random()*70 + '%';
 
-      render();
+      // Only re-render when message tier changes
+      if (
+        noClickCount === 10 ||
+        noClickCount === 20 ||
+        noClickCount === 30 ||
+        noClickCount === 40 ||
+        noClickCount === 50 ||
+        noClickCount === 75 ||
+        noClickCount === 100
+      ) {
+        render();
+      }
     }
 
     render();
@@ -211,7 +223,5 @@
 
 </body>
 </html>
-
-
 
 
